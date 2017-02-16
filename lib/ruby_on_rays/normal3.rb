@@ -1,26 +1,14 @@
 module RubyOnRays
-  # Vector3
+  # Normal3
   #
-  # A Vector3 represents a direction in 3D space.
-  class Vector3
-    # Returns a unit vector in the x-direction.
-    # @return [Vector3]
-    def self.i
-      Vector3.new(1.0, 0.0, 0.0)
-    end
-
-    # Returns a unit vector in the y-direction.
-    # @return [Vector3]
-    def self.j
-      Vector3.new(0.0, 1.0, 0.0)
-    end
-
-    # Returns a unit vector in the z-direction.
-    # @return [Vector3]
-    def self.k
-      Vector3.new(0.0, 0.0, 1.0)
-    end
-
+  # Normal3 represents a surface normal, a vector perpendicular to the surface
+  # at a given point. Normals are distinct from vectors in that they behave
+  # differently under certain transformations (since they need to remain
+  # perpendicular to the surface).
+  #
+  # @note Despite the terminology, Normal3's are not guaranteed to be
+  # normalized.
+  class Normal3
     # @!attribute x [rw] The component in the x-direction.
     #   @return [Float]
     attr_accessor :x
@@ -33,7 +21,7 @@ module RubyOnRays
     #   @return [Float]
     attr_accessor :z
 
-    # Initializes a new vector with the given components.
+    # Initializes a new normal with the given components.
     # @param x [Float] The x-direction. Be careful not to pass an Integer.
     # @param y [Float] The y-direction. Be careful not to pass an Integer.
     # @param z [Float] The z-direction. Be careful not to pass an Integer.
@@ -43,21 +31,15 @@ module RubyOnRays
       @z = z
     end
 
-    # Returns a new vector pointing in the opposite direction.
-    # @return [Vector3]
-    def -@
-      Vector3.new(-@x, -@y, -@z)
-    end
-
-    # Adds a vector. Does not mutate self.
-    # @param rhs [Vector3]
-    # @return [Vector3]
+    # Adds a normal. Does not mutate self.
+    # @param rhs [Normal3]
+    # @return [Normal3]
     def add(rhs)
-      Vector3.new(@x + rhs.x, @y + rhs.y, @z + rhs.z)
+      Normal3.new(@x + rhs.x, @y + rhs.y, @z + rhs.z)
     end
 
-    # Adds a vector to self.
-    # @param rhs [Vector3]
+    # Adds a normal to self.
+    # @param rhs [Normal3]
     # @return [self]
     def add!(rhs)
       @x += rhs.x
@@ -66,15 +48,15 @@ module RubyOnRays
       self
     end
 
-    # Subtracts a vector. Does not mutate self.
-    # @param rhs [Vector3]
+    # Subtracts a normal. Does not mutate self.
+    # @param rhs [Normal3]
     # @return [Vector3]
     def sub(rhs)
-      Vector3.new(@x - rhs.x, @y - rhs.y, @z - rhs.z)
+      Normal3.new(@x - rhs.x, @y - rhs.y, @z - rhs.z)
     end
 
-    # Subtracts a vector from self.
-    # @param rhs [Vector3]
+    # Subtracts a normal from self.
+    # @param rhs [Normal]
     # @return [self]
     def sub!(rhs)
       @x -= rhs.x
@@ -83,11 +65,11 @@ module RubyOnRays
       self
     end
 
-    # Returns the vector-scalar product. Does not mutate self.
+    # Returns the normal-scalar product. Does not mutate self.
     # @param rhs [Float]
-    # @return [Vector3]
+    # @return [Normal3]
     def mul(rhs)
-      Vector3.new(@x * rhs, @y * rhs, @z * rhs)
+      Normal3.new(@x * rhs, @y * rhs, @z * rhs)
     end
 
     # Multiplies self by a scalar.
@@ -100,13 +82,13 @@ module RubyOnRays
       self
     end
 
-    # Returns the vector-scalar quotient. Does not mutate self.
+    # Returns the normal-scalar quotient. Does not mutate self.
     # @param rhs [Float]
-    # @return [Vector3]
+    # @return [Normal3]
     # @note Does not check for 0 divisor or 0 numerators!
     def div(rhs)
-      inverse = 1.0 / rhs
-      Vector3.new(@x * inverse, @y * inverse, @z * inverse)
+      f = 1.0 / rhs
+      Normal3.new(@x * f, @y * f, @z * f)
     end
 
     # Divides self by a scalar.
@@ -114,10 +96,10 @@ module RubyOnRays
     # @return [self]
     # @note Does not check for 0 divisor or 0 numerators!
     def div!(rhs)
-      inverse = 1.0 / rhs
-      @x *= inverse
-      @y *= inverse
-      @z *= inverse
+      f = 1.0 / rhs
+      @x *= f
+      @y *= f
+      @z *= f
       self
     end
 
@@ -128,45 +110,34 @@ module RubyOnRays
       @x * rhs.x + @y * rhs.y + @z * rhs.z
     end
 
-    # Returns the vector-vector cross product.
-    # @param rhs [Vector3]
-    # @return [Float]
-    def cross(rhs)
-      x = @y * rhs.z - @z * rhs.y
-      y = @z * rhs.x - @x * rhs.z
-      z = @x * rhs.y - @y * rhs.x
-
-      Vector3.new(x, y, z)
-    end
-
-    # Compares the vector to another vector or another object.
-    # @param other [Vector3, Object]
-    # @return [Boolean] False if other is not a Vector3 or if other points in
+    # Compares the normal to another normal or another object.
+    # @param other [Normal3, Object]
+    # @return [Boolean] False if other is not a Normal3 or if other points in
     #   a different direction.
     def ==(other)
-      return false unless other.is_a? Vector3
+      return false unless other.is_a? Normal3
       @x == other.x && @y == other.y && @z == other.z
     end
 
-    # Returns the length of the vector.
+    # Returns the length of the normal.
     # @return [Float]
     def length
       Math.sqrt(@x * @x + @y * @y + @z * @z)
     end
 
-    # Returns the length squared of the vector. Use this if you only care
-    # about the relative magnitudes of vectors as this method avoids calculating
+    # Returns the length squared of the normal. Use this if you only care
+    # about the relative magnitudes of normals as this method avoids calculating
     # the expensive square root.
     # @return [Float]
     def length_squared
       @x * @x + @y * @y + @z * @z
     end
 
-    # Returns a unit vector in the same direction. Does not mutate self.
-    # @return [Vector3]
+    # Returns a unit normal in the same direction. Does not mutate self.
+    # @return [Normal3]
     def normalize
       f = 1.0 / length
-      Vector3.new(@x * f, @y * f, @z * f)
+      Normal3.new(@x * f, @y * f, @z * f)
     end
 
     # Normalizes self.
@@ -185,22 +156,22 @@ module RubyOnRays
       Point3.new(@x, @y, @z)
     end
 
-    # Returns a copy.
+    # Returns a vector pointing in the same direction.
     # @return [Vector3]
     def to_v
       Vector3.new(@x, @y, @z)
     end
 
-    # Returns a normal with the same components.
+    # Returns a copy of the normal.
     # @return [Normal3]
     def to_n
       Normal3.new(@x, @y, @z)
     end
 
-    # Returns a string representation of the vector.
+    # Returns a string representation of the normal.
     # @return [String]
     def to_s
-      "v<#{@x}, #{@y}, #{@z}>"
+      "n<#{@x}, #{@y}, #{@z}>"
     end
 
     # Returns an array with the direction components.
@@ -209,7 +180,7 @@ module RubyOnRays
       [@x, @y, @z]
     end
 
-    # Returns a hash representation of the vector.
+    # Returns a hash representation of the normal.
     # @return [Hash<Symbol, Float>]
     def to_h
       { x: @x, y: @y, z: @z }

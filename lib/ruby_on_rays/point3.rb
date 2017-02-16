@@ -77,7 +77,7 @@ module RubyOnRays
     end
 
     # Returns the dot product with another point or with a vector.
-    # @param rhs [Point3, Vector3]
+    # @param rhs [Point3, Vector3, Normal3]
     # @return [Float]
     def dot(rhs)
       @x * rhs.x + @y * rhs.y + @z * rhs.z
@@ -124,6 +124,12 @@ module RubyOnRays
     # @return [Vector3]
     def to_v
       Vector3.new(@x, @y, @z)
+    end
+
+    # Returns a normal with the same components.
+    # @return [Normal3]
+    def to_n
+      Normal3.new(@x, @y, @z)
     end
 
     # Returns a string representation of the point.

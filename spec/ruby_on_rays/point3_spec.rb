@@ -146,6 +146,16 @@ module RubyOnRays
           expect(dot_product).to be_within(0.001).of 26.0
         end
       end
+
+      context 'given a Normal3' do
+        let(:lhs) { Point3.new(1.0, 2.0, 3.0) }
+        let(:rhs) { Normal3.new(3.0, 4.0, 5.0) }
+        let(:dot_product) { lhs.dot(rhs) }
+
+        it 'returns the dot product' do
+          expect(dot_product).to be_within(0.001).of 26.0
+        end
+      end
     end
 
     describe '#distance_to' do
@@ -212,6 +222,18 @@ module RubyOnRays
         expect(v.x).to eq p.x
         expect(v.y).to eq p.y
         expect(v.z).to eq p.z
+      end
+    end
+
+    describe '#to_n' do
+      let(:p) { Point3.new(1.0, 2.0, 3.0) }
+      let(:n) { p.to_n }
+
+      it 'returns a Vector3 with the same components' do
+        expect(n).to be_a Normal3
+        expect(n.x).to eq p.x
+        expect(n.y).to eq p.y
+        expect(n.z).to eq p.z
       end
     end
   end

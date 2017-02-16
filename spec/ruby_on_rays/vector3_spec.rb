@@ -260,6 +260,16 @@ module RubyOnRays
           expect(dot_product).to be_within(0.001).of 26.0
         end
       end
+
+      context 'given a Normal3' do
+        let(:lhs) { Vector3.new(1.0, 2.0, 3.0) }
+        let(:rhs) { Normal3.new(3.0, 4.0, 5.0) }
+        let(:dot_product) { lhs.dot(rhs) }
+
+        it 'returns the dot product' do
+          expect(dot_product).to be_within(0.001).of 26.0
+        end
+      end
     end
 
     describe '#cross' do
@@ -357,6 +367,18 @@ module RubyOnRays
       end
     end
 
+    describe '#to_p' do
+      let(:v) { Vector3.new(1.0, 2.0, 3.0) }
+      let(:p) { v.to_p }
+
+      it 'returns a Point3 with the same components' do
+        expect(p).to be_a Point3
+        expect(p.x).to eq v.x
+        expect(p.y).to eq v.y
+        expect(p.z).to eq v.z
+      end
+    end
+
     describe '#to_v' do
       let(:u) { Vector3.new(1.0, 2.0, 3.0) }
       let(:v) { u.to_v }
@@ -368,15 +390,15 @@ module RubyOnRays
       end
     end
 
-    describe '#to_p' do
+    describe '#to_n' do
       let(:v) { Vector3.new(1.0, 2.0, 3.0) }
-      let(:p) { v.to_p }
+      let(:n) { v.to_n }
 
-      it 'returns a Point3 with the same components' do
-        expect(p).to be_a Point3
-        expect(p.x).to eq v.x
-        expect(p.y).to eq v.y
-        expect(p.z).to eq v.z
+      it 'returns a Normal3 with the same components' do
+        expect(n).to be_a Normal3
+        expect(n.x).to eq v.x
+        expect(n.y).to eq v.y
+        expect(n.z).to eq v.z
       end
     end
   end
