@@ -209,6 +209,16 @@ module RubyOnRays
     end
 
     describe '#dot' do
+      context 'given a Point2' do
+        let(:lhs) { Vector2.new(1.0, 2.0) }
+        let(:rhs) { Point2.new(3.0, 4.0) }
+        let(:dot_product) { lhs.dot(rhs) }
+
+        it 'returns the dot product' do
+          expect(dot_product).to be_within(0.001).of 11.0
+        end
+      end
+
       context 'given a Vector2' do
         let(:lhs) { Vector2.new(1.0, 2.0) }
         let(:rhs) { Vector2.new(3.0, 4.0) }
@@ -269,6 +279,28 @@ module RubyOnRays
       it 'returns a vector pointing in the same direction' do
         expect(vn.x).to be_within(0.001).of(1.0 / Math.sqrt(2.0))
         expect(vn.y).to be_within(0.001).of(1.0 / Math.sqrt(2.0))
+      end
+    end
+
+    describe '#to_v' do
+      let(:v) { Vector2.new(1.0, 2.0) }
+      let(:u) { v.to_v }
+
+      it 'returns a Point2 with the same components' do
+        expect(u).to be_a Vector2
+        expect(u).to eq v
+        expect(u).to_not be v
+      end
+    end
+
+    describe '#to_p' do
+      let(:v) { Vector2.new(1.0, 2.0) }
+      let(:p) { v.to_p }
+
+      it 'returns a copy of the point' do
+        expect(p).to be_a Point2
+        expect(p.x).to eq v.x
+        expect(p.y).to eq v.y
       end
     end
   end

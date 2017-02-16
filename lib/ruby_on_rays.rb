@@ -1,5 +1,6 @@
 require 'ruby_on_rays/version'
 require 'ruby_on_rays/vector2'
+require 'ruby_on_rays/point2'
 
 # RoR
 #
