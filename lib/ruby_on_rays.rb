@@ -4,6 +4,7 @@ require 'ruby_on_rays/point2'
 require 'ruby_on_rays/vector3'
 require 'ruby_on_rays/point3'
 require 'ruby_on_rays/normal3'
+require 'ruby_on_rays/ray3'
 
 # RoR
 #
