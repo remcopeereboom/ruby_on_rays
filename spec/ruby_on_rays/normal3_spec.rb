@@ -268,6 +268,5 @@ module RubyOnRays
         expect(n_new).to_not be n
       end
     end
-
   end
 end
