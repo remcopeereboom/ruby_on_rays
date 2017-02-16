@@ -1,4 +1,5 @@
 require 'ruby_on_rays/version'
+require 'ruby_on_rays/vector2'
 
 # RoR
 #
