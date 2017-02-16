@@ -1,0 +1,8 @@
+lib_path = File.expand_path('../../lib' ,__FILE__)
+unless $LOAD_PATH.include? lib_path
+  puts "Adding #{lib_path} to load_path"
+  $LOAD_PATH.unshift lib_path
+end
+
+require 'ruby_on_rays'
+RoR.run
