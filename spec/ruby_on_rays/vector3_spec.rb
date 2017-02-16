@@ -241,6 +241,16 @@ module RubyOnRays
     end
 
     describe '#dot' do
+      context 'given a Point3' do
+        let(:lhs) { Vector3.new(1.0, 2.0, 3.0) }
+        let(:rhs) { Point3.new(3.0, 4.0, 5.0) }
+        let(:dot_product) { lhs.dot(rhs) }
+
+        it 'returns the dot product' do
+          expect(dot_product).to be_within(0.001).of 26.0
+        end
+      end
+
       context 'given a Vector3' do
         let(:lhs) { Vector3.new(1.0, 2.0, 3.0) }
         let(:rhs) { Vector3.new(3.0, 4.0, 5.0) }
@@ -355,6 +365,18 @@ module RubyOnRays
         expect(v).to be_a Vector3
         expect(v).to eq u
         expect(v).to_not be u
+      end
+    end
+
+    describe '#to_p' do
+      let(:v) { Vector3.new(1.0, 2.0, 3.0) }
+      let(:p) { v.to_p }
+
+      it 'returns a Point3 with the same components' do
+        expect(p).to be_a Point3
+        expect(p.x).to eq v.x
+        expect(p.y).to eq v.y
+        expect(p.z).to eq v.z
       end
     end
   end
