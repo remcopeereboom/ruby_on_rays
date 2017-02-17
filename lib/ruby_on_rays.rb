@@ -6,6 +6,7 @@ require 'ruby_on_rays/point3'
 require 'ruby_on_rays/normal3'
 require 'ruby_on_rays/ray3'
 require 'ruby_on_rays/matrix4x4'
+require 'ruby_on_rays/color'
 
 # RubyOnRays
 #
