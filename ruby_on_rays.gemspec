@@ -5,7 +5,7 @@ require 'ruby_on_rays/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'ruby_on_rays'
-  spec.version       = RoR::Version.full
+  spec.version       = RubyOnRays::Version.full
   spec.authors       = ['Remco Peereboom']
   spec.email         = ['rpeere@yandex.com']
 

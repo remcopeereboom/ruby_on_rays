@@ -1,4 +1,4 @@
-module RoR
+module RubyOnRays
   # Version
   #
   # Semantic version information for the Ruby goes Rays program.

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module RoR
+module RubyOnRays
   describe Version do
     describe '::MAJOR' do
       it 'is an integer' do

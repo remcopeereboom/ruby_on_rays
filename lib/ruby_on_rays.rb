@@ -7,8 +7,8 @@ require 'ruby_on_rays/normal3'
 require 'ruby_on_rays/ray3'
 require 'ruby_on_rays/matrix4x4'
 
-# RoR
+# RubyOnRays
 #
 # Top-level namespace for the Ruby on Rays program.
-module RoR
+module RubyOnRays
 end
