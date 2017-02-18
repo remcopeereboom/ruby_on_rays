@@ -13,4 +13,8 @@ require 'ruby_on_rays/color'
 #
 # Top-level namespace for the Ruby on Rays program.
 module RubyOnRays
+  # Runner for bin/run.
+  def self.run
+    # TODO: implement
+  end
 end

@@ -5,4 +5,4 @@ unless $LOAD_PATH.include? lib_path
 end
 
 require 'ruby_on_rays'
-RoR.run
+RubyOnRays.run
