@@ -12,12 +12,17 @@ Metrics/BlockLength:
     - '**/*_spec.rb'
     - '**/ruby_on_rays.gemspec'
 
-
 Metrics/ModuleLength:
   Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - '**/lib/ruby_on_rays/transform.rb'
 
 Metrics/ClassLength:
   Enabled: false
 
 Metrics/AbcSize:
   Max: 25 # Default is 15.
+  Exclude:
+    - '**/lib/ruby_on_rays/transform.rb' # Too many matrix calculations!
