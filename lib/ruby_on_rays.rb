@@ -61,7 +61,10 @@ module RubyOnRays
       end
     end
 
-    film.save('tmp/foo.png')
+    previous_name = Dir.glob('./tmp/foo*.png').last
+    previous_index = previous_name.match(/foo(\d?)\.png/)[1].to_i
+    next_name = "tmp/foo#{previous_index + 1}.png"
+    film.save(next_name)
   end
 
   class Sphere
