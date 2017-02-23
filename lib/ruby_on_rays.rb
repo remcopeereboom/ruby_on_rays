@@ -10,7 +10,8 @@ require 'ruby_on_rays/transform'
 require 'ruby_on_rays/color'
 
 require 'ruby_on_rays/scene'
-require 'ruby_on_rays/sphere'
+require 'ruby_on_rays/shapes/sphere'
+require 'ruby_on_rays/shapes/plane'
 require 'ruby_on_rays/point_light'
 require 'ruby_on_rays/perspective_camera'
 
@@ -22,8 +23,8 @@ module RubyOnRays
 
   # Runner for bin/run.
   def self.run
-    width = 480
-    height = 480
+    width = 640
+    height = 640
 
     scene = self.scene()
     camera = PerspectiveCamera.new(width, height)
@@ -59,8 +60,18 @@ module RubyOnRays
   # @return [Scene]
   def self.scene
     scene = Scene.new
-    scene.add_shape(Sphere.new(center: Point3.new(0.0, 0.0, 2.0), radius: 1.0))
-    scene.add_shape(Sphere.new(center: Point3.new(0.0, 1.0, 3.0), radius: 1.0))
+
+    sphere1 = Sphere.new(center: Point3.new(0.0, 0.0, 2.0), radius: 1.0,
+                         color: Color.new(1.0, 0.0, 0.0))
+    sphere2 = Sphere.new(center: Point3.new(0.0, 2.0, 3.0), radius: 1.0,
+                         color: Color.new(1.0, 0.0, 1.0))
+    plane = Plane.new(Point3.new(0.0, -0.6, 0.0), Normal3.new(0.1, 1.0, 0.0),
+                      color: Color.new(1.0, 1.0, 0.0))
+
+    scene.add_shape(sphere1)
+    scene.add_shape(sphere2)
+    scene.add_shape(plane)
+
     scene.add_light(PointLight.new(Point3.new(10.0, 10.0, -10.0)))
     scene
   end
