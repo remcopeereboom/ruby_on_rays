@@ -32,7 +32,7 @@ module RubyOnRays
       hit_info = trace(ray, scene)
       next unless hit_info
 
-      camera[p_film] = hit_to_color(hit_info, scene.lights.first)
+      camera[p_film] = shade(hit_info, scene.lights.first)
     end
 
     camera.save
@@ -65,7 +65,7 @@ module RubyOnRays
     scene
   end
 
-  def self.hit_to_color(hit_info, light)
+  def self.shade(hit_info, light)
     l = light.p.sub(hit_info[:p]).normalize
 
     diffuse = hit_info[:n].dot(l)
