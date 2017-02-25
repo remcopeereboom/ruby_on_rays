@@ -12,6 +12,7 @@ require 'ruby_on_rays/color'
 require 'ruby_on_rays/scene'
 require 'ruby_on_rays/shapes/sphere'
 require 'ruby_on_rays/shapes/plane'
+require 'ruby_on_rays/shapes/triangle'
 require 'ruby_on_rays/point_light'
 require 'ruby_on_rays/perspective_camera'
 
@@ -68,12 +69,17 @@ module RubyOnRays
     plane = Plane.new(Point3.new(0.0, -0.6, 0.0), Normal3.new(0.1, 1.0, 0.0),
                       color: Color.new(1.0, 1.0, 0.0))
 
+    triangle = Triangle.new(Point3.new(-1.0, -1.0, 2.0),
+                            Point3.new(0.0, 1.0, 1.0),
+                            Point3.new(1.0, -1.0, 2.0))
     scene.add_shape(sphere1)
     scene.add_shape(sphere2)
     scene.add_shape(plane)
+    scene.add_shape(triangle)
 
     scene.add_light(PointLight.new(Point3.new(10.0, 10.0, -10.0)))
-    scene.add_light(PointLight.new(Point3.new(10.0, 90.0, -10.0), color: Color.new(0.0, 1.0, 1.0)))
+    scene.add_light(PointLight.new(Point3.new(10.0, 90.0, -10.0),
+                                   color: Color.new(0.0, 1.0, 1.0)))
     scene
   end
 
