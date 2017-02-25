@@ -33,7 +33,7 @@ module RubyOnRays
       hit_info = trace(ray, scene)
       next unless hit_info
 
-      camera[p_film] = shade(hit_info, scene.lights.first)
+      camera[p_film] = shade(hit_info, scene.lights)
     end
 
     camera.save
@@ -76,14 +76,30 @@ module RubyOnRays
     scene
   end
 
-  def self.shade(hit_info, light)
-    l = light.p.sub(hit_info[:p]).normalize
+  # Calculates shading for a hitpoint.
+  def self.shade(hit_info, lights)
+    acc = Color.new(0.0, 0.0, 0.0)
 
-    diffuse = hit_info[:n].dot(l)
+    lights.each do |l|
+      acc.add!(diffuse(hit_info, l))
+    end
+
+    acc.add!(ambient(hit_info))
+  end
+
+  # Calculates the ambient shading.
+  def self.ambient(hit_info)
+    hit_info[:shape].color.mul(0.1) # ambient factor
+  end
+
+  # Calculates the diffuse shading
+  def self.diffuse(hit_info, light)
+    lp = light.p.sub(hit_info[:p]).normalize
+
+    diffuse = hit_info[:n].dot(lp)
     diffuse = 0 if diffuse < 0
+    diffuse *= 0.9 # diffuse factor
 
-    kd = 0.9 # diffuse factor
-    ka = 0.1 # ambient factor
-    hit_info[:shape].color.mul(kd * diffuse + ka)
+    hit_info[:shape].color.mul(diffuse).mul!(light.color)
   end
 end
