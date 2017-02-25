@@ -73,6 +73,7 @@ module RubyOnRays
     scene.add_shape(plane)
 
     scene.add_light(PointLight.new(Point3.new(10.0, 10.0, -10.0)))
+    scene.add_light(PointLight.new(Point3.new(10.0, 90.0, -10.0), color: Color.new(0.0, 1.0, 1.0)))
     scene
   end
 

@@ -78,7 +78,7 @@ module RubyOnRays
       g = (color.g * 255.0).to_i
       b = (color.b * 255.0).to_i
 
-      ChunkyPNG::Color.rgb(r, g, b)
+      ChunkyPNG::Color.rgb(clamp(r), clamp(g), clamp(b))
     end
 
     # Returns a ray for the given film point.
@@ -90,6 +90,16 @@ module RubyOnRays
                       @offset_y + p_film.y * @dy,
                       1.0)
       Ray3.new(o, d)
+    end
+
+    def clamp(value)
+      if value < 0
+        0
+      elsif value < 255
+        value
+      else
+        255
+      end
     end
   end
 end
